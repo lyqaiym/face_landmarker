@@ -1,0 +1,68 @@
+import java.util.concurrent.TimeUnit
+
+apply plugin: 'com.android.library'
+
+project.configurations.all {
+    it.resolutionStrategy.cacheDynamicVersionsFor(5, TimeUnit.MINUTES)
+    it.resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+}
+
+android {
+    compileSdk = rootProject.ext.compileSdkVersion
+    buildToolsVersion = rootProject.ext.buildToolsVersion
+    ndkVersion = rootProject.ext.ndkVersion
+    namespace 'com.google.opencv'
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName version
+        multiDexEnabled true
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        javaCompileOptions {
+            annotationProcessorOptions {
+//                includeCompileClasspath = true
+                arguments = [moduleName: project.getName(),AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_SDK=" + ANDROID_SDK
+                cppFlags '-std=c++17'
+//                abiFilters 'armeabi-v7a', 'arm64-v8a'
+                abiFilters 'arm64-v8a'
+            }
+        }
+    }
+    packagingOptions {
+        exclude('META-INF/LICENSE')
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            java.srcDirs += ['src/main/mediapipe']
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+    }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/opencv/CMakeLists.txt"
+        }
+    }
+}
+dependencies {
+    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'com.google.protobuf:protobuf-java:3.11.4'
+    implementation 'com.google.guava:guava:29.0-android'
+    implementation 'com.google.flogger:flogger:0.7.4'
+    implementation 'com.google.flogger:flogger-system-backend:0.7.4'
+    implementation 'com.google.auto.value:auto-value-annotations:1.8.1'
+//    rootProject.xrsImplementation(this.getProject(), rootProject.ext.thirdlibraries.auto_value)
+//    implementation 'com.google.mediapipe:tasks-vision:0.10.0'
+}

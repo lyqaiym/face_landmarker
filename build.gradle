@@ -1,0 +1,55 @@
+/*
+ * Copyright 2022 The TensorFlow Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *             http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+plugins {
+    id 'com.android.application' version '7.2.2' apply false
+    id 'com.android.library' version '7.2.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
+    id 'de.undercouch.download' version '4.1.2' apply false
+}
+
+// local.properties 的 sdk.dir 是每台机器各自的 SDK 路径(被 gitignore),AGP 自动读它。
+// 这里把它读出来赋给 ANDROID_SDK,供各模块 externalNativeBuild 的 -DANDROID_SDK 使用。
+// ext 属性会覆盖 gradle.properties 里的同名兜底值,所以 gradle.properties 那行可以留着当最后兜底。
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+def androidSdkFromLocal = localProperties.getProperty('sdk.dir')
+        ?: System.getenv('ANDROID_HOME')
+        ?: System.getenv('ANDROID_SDK_ROOT')
+
+subprojects {
+    if (androidSdkFromLocal != null) {
+        ext.ANDROID_SDK = androidSdkFromLocal
+    }
+}
+
+ext {
+    minSdkVersion = 16
+    compileSdkVersion = 34
+    targetSdkVersion = 34
+    buildToolsVersion = "37.0.0"
+    javaVersion = JavaVersion.VERSION_1_8
+    ndkVersion = "28.2.13676358"
+    cmakeVersion = "4.1.2"
+    shadowhookVersion = "2.0.1"
+//    abiFilters = "armeabi-v7a,arm64-v8a,x86,x86_64"
+    abiFilters = "armeabi-v7a,arm64-v8a"
+    useASAN = false
+    dependencyOnLocalLibrary = true
+}
