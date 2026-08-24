@@ -39,6 +39,8 @@ MODULES="
   vulkan_headers/src/main/cpp/vulkan_headers|git@github.com:KhronosGroup/Vulkan-Headers.git|32c07c0c5334aea069e518206d75e002ccd85389
   tensorflow/src/main/cpp/tensorflow|https://github.com/tensorflow/tensorflow.git|a481b10260dfdf833a1b16007eead49c1d7febf3
   tensorflow_text/src/main/cpp/tensorflow_text|git@github.com:tensorflow/text.git|v2.20.0
+  LiteRT/src/main/cpp/third_party/abseil-cpp|https://github.com/abseil/abseil-cpp.git|20260526.0
+  mediapipe_tasks/src/main/cpp/third_party|git@github.com:KhronosGroup/OpenCL-Headers.git
 "
 
 # LiteRT 层的依赖,目标目录是 LiteRT/src/main/cpp/<dep>。flatbuffers/protobuf 之外

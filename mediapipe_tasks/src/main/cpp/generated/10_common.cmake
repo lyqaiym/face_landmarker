@@ -768,7 +768,7 @@ target_include_directories(mp_flags_0c46200db138 SYSTEM INTERFACE
   "${MP_ROOT}/LiteRT/src/main/cpp/XNNPACK/src/subgraph/rewrites/src"
   "${MP_ROOT}/LiteRT/src/main/cpp/LiteRT/tflite/delegates/gpu/gl"
   "${MP_GEN}/external/litert/tflite/delegates/gpu/gl"
-  "${MP_ROOT}/tensorflow/src/main/cpp/tensorflow/third_party/opencl_headers/OpenCL-Headers"
+  "${MP_ROOT}/mediapipe_tasks/src/main/cpp/third_party/OpenCL-Headers"
   "${MP_ROOT}/vulkan_headers/src/main/cpp/vulkan_headers/include"
   "${MP_ROOT}/LiteRT/src/main/cpp/LiteRT/tflite/delegates/gpu/cl"
   "${MP_GEN}/external/litert/tflite/delegates/gpu/cl"

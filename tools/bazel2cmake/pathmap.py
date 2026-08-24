@@ -86,7 +86,9 @@ MODULE_REPOS = {
     "com_github_glog_glog_no_gflags": f"{ROOT}/glog/src/main/cpp/glog",
     "com_github_gflags_gflags": f"{ROOT}/glog/src/main/cpp/gflags",
     "org_tensorflow": TF,
-    "opencl_headers": f"{TF}/third_party/opencl_headers/OpenCL-Headers",
+    # Cloned at commit dcd5bede6859d26833cd85f0d6bbcee7382dc9b3, the commit TF's
+    # WORKSPACE pins via tf_http_archive. Header-only.
+    "opencl_headers": f"{ROOT}/mediapipe_tasks/src/main/cpp/third_party/OpenCL-Headers",
     # Cloned at tag 2025-11-05, the version MODULE.bazel.lock resolves re2 to.
     "re2~": f"{ROOT}/re2/src/main/cpp/re2",
     # Cloned at the commit WORKSPACE pins, with third_party/com_google_audio_tools_fixes.diff

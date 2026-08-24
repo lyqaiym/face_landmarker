@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdk = rootProject.ext.compileSdkVersion
+    ndkVersion = rootProject.ext.ndkVersion
+
+    defaultConfig {
+//        namespace 'com.google.LiteRT'
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+        externalNativeBuild {
+            cmake {
+//                arguments "-DFLATBUFFERS_SRC=${rootProject.projectDir}/flatbuffers/src/main/cpp/flatbuffers",
+//                        "-DFLATBUFFERS_BUILD_FLATC=OFF","-DFLATBUFFERS_BUILD_SHAREDLIB=ON"
+//                arguments "-DANDROID_SDK=" + ANDROID_SDK
+                arguments "-DTFLITE_HOST_TOOLS_DIR=" + new File(rootProject.projectDir, "build/host-flatc").absolutePath
+//                arguments "-DGOOGLETEST_PATH=" + new File(rootProject.projectDir, "googletest/src/main/cpp/googletest").absolutePath
+                arguments "-DFLATBUFFERS_BUILD_FLATC=OFF"
+                cppFlags '-std=c++20'
+//                abiFilters 'armeabi-v7a', 'arm64-v8a'
+                abiFilters 'arm64-v8a'
+                // AGP builds every shared-library target it discovers and ignores CMake's
+                // EXCLUDE_FROM_ALL, so tflite's _pywrap_tensorflow_interpreter_wrapper would
+                // get compiled and fail on the missing Python.h.
+                targets 'tensorflow-lite'
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
+        }
+    }
+}
+
+dependencies {
+
+//    implementation 'androidx.appcompat:appcompat:1.6.1'
+//    implementation 'com.google.android.material:material:1.8.0'
+//    testImplementation 'junit:junit:4.13.2'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
