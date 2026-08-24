@@ -3,11 +3,12 @@ plugins {
 }
 
 android {
-    compileSdk = rootProject.ext.compileSdkVersion
-    ndkVersion = rootProject.ext.ndkVersion
+    compileSdk 32
+    ndkVersion "21.1.6352462"
 
     defaultConfig {
-        minSdk rootProject.ext.minSdkVersion
+        // logging_unittest.cc 使用 <glob.h> globfree
+        minSdk 24
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -16,13 +17,10 @@ android {
         }
         externalNativeBuild {
             cmake {
-                arguments "-DANDROID_SDK=" + ANDROID_SDK
+                arguments "-DBUILD_TESTING=OFF","-Dstderrthreshold=INFO"
                 cppFlags '-std=c++17'
 //                abiFilters 'armeabi-v7a', 'arm64-v8a'
                 abiFilters 'arm64-v8a'
-                // 只 build opencv_export(它依赖 opencv_java 及其静态库),跳过 OpenCV 的
-                // perf/test target;同时把 libopencv_java4.so 导出到 export/ 供 mediapipe_tasks 引用。
-                targets 'opencv_export'
             }
         }
     }
@@ -40,6 +38,7 @@ android {
     externalNativeBuild {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
         }
     }
 }

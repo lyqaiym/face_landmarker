@@ -31,4 +31,6 @@ dependencyResolutionManagement {
 include ':app'
 include ':eigen'
 include ':LiteRT'
+include ':mediapipe_tasks'
+include ':mediapipelib'
 include ':opencv'

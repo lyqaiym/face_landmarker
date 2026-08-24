@@ -16,13 +16,9 @@ android {
         }
         externalNativeBuild {
             cmake {
-                arguments "-DANDROID_SDK=" + ANDROID_SDK
                 cppFlags '-std=c++17'
 //                abiFilters 'armeabi-v7a', 'arm64-v8a'
                 abiFilters 'arm64-v8a'
-                // 只 build opencv_export(它依赖 opencv_java 及其静态库),跳过 OpenCV 的
-                // perf/test target;同时把 libopencv_java4.so 导出到 export/ 供 mediapipe_tasks 引用。
-                targets 'opencv_export'
             }
         }
     }
@@ -39,7 +35,9 @@ android {
     }
     externalNativeBuild {
         cmake {
+//            zconf.h
             path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
         }
     }
 }
