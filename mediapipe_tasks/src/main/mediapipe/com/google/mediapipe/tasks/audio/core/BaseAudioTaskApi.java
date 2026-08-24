@@ -14,9 +14,12 @@
 
 package com.google.mediapipe.tasks.audio.core;
 
+import android.Manifest;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+
+import androidx.annotation.RequiresPermission;
 
 import com.google.mediapipe.framework.MediaPipeException;
 import com.google.mediapipe.framework.Packet;
@@ -172,6 +175,7 @@ public class BaseAudioTaskApi implements AutoCloseable {
    * @throws IllegalArgumentException if the model required channel count is unsupported
    * @throws IllegalStateException if AudioRecord instance failed to initialize
    */
+  @RequiresPermission(Manifest.permission.RECORD_AUDIO)
   public static AudioRecord createAudioRecord(
       int numChannels, int sampleRate, int requiredInputBufferSize) {
     int channelConfig = 0;
@@ -224,6 +228,7 @@ public class BaseAudioTaskApi implements AutoCloseable {
    * @throws IllegalArgumentException if the model required channel count is unsupported
    * @throws IllegalStateException if AudioRecord instance failed to initialize
    */
+  @RequiresPermission(Manifest.permission.RECORD_AUDIO)
   public static AudioRecord createAudioRecord() {
     // TODO: Support creating AudioRecord based on the model specifications.
     return createAudioRecord(1, 16000, 16000);
