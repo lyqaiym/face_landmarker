@@ -39,7 +39,6 @@ MODULES="
   vulkan_headers/src/main/cpp/vulkan_headers|git@github.com:KhronosGroup/Vulkan-Headers.git|32c07c0c5334aea069e518206d75e002ccd85389
   tensorflow/src/main/cpp/tensorflow|https://github.com/tensorflow/tensorflow.git|a481b10260dfdf833a1b16007eead49c1d7febf3
   tensorflow_text/src/main/cpp/tensorflow_text|git@github.com:tensorflow/text.git|v2.20.0
-  LiteRT/src/main/cpp/third_party/abseil-cpp|https://github.com/abseil/abseil-cpp.git|20260526.0
   mediapipe_tasks/src/main/cpp/third_party|git@github.com:KhronosGroup/OpenCL-Headers.git
 "
 
@@ -115,7 +114,7 @@ apply() { # <dest-relative-path> <patch-file...>
 
 apply "audio_tools/src/main/cpp/audio_tools" audio_tools_fixes.diff
 apply "icu/src/main/cpp/icu" icu_udata.patch
-apply "sentencepiece/src/main/cpp/sentencepiece/sentencepiece" sentencepiece.diff
+apply "sentencepiece/src/main/cpp/sentencepiece" sentencepiece.diff
 apply "stblib/src/main/cpp/stblib" stb_image_impl.diff
 # LiteRT 的 mediapipe GPU 自定义算子:v2.1.6 原生没有这四个 mediapipe 目录
 # (common/tasks/selectors/gl 的 mediapipe),全由 Bazel 的 litert_custom_ops.diff 提供;
