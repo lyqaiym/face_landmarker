@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace 'com.google.opencv'
     compileSdk = rootProject.ext.compileSdkVersion
     ndkVersion = rootProject.ext.ndkVersion
 

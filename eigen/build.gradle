@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace 'com.eigen.eigen'
     compileSdk 32
     ndkVersion = rootProject.ext.ndkVersion
 

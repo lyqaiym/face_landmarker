@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
+    namespace 'com.google.LiteRT'
     compileSdk = rootProject.ext.compileSdkVersion
     ndkVersion = rootProject.ext.ndkVersion
 
     defaultConfig {
-//        namespace 'com.google.LiteRT'
         minSdk rootProject.ext.minSdkVersion
         targetSdk 32
         versionCode 1
