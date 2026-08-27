@@ -30,7 +30,7 @@ dependencyResolutionManagement {
 }
 include ':app'
 //include ':abseil-cpp'
-include ':eigen'
+//include ':eigen'
 include ':LiteRT'
 include ':mediapipe_tasks'
 //include ':mediapipelib'

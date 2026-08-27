@@ -104,7 +104,7 @@ dependencies {
     // MediaPipe Library
 //    implementation 'com.google.mediapipe:tasks-vision:1.0.0'
 //    implementation project(':abseil-cpp')
-    implementation project(':eigen')
+//    implementation project(':eigen')
     implementation project(':LiteRT')
     implementation project(':mediapipe_tasks')
 //    implementation project(':mediapipelib')
