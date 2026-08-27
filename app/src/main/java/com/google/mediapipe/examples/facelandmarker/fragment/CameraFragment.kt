@@ -416,8 +416,8 @@ class CameraFragment : Fragment(), FaceLandmarkerHelper.LandmarkerListener {
     }
 
     override fun onEmpty() {
-        fragmentCameraBinding.overlay.clear()
         activity?.runOnUiThread {
+            fragmentCameraBinding.overlay.clear()
             faceBlendshapesResultAdapter.updateResults(null)
             faceBlendshapesResultAdapter.notifyDataSetChanged()
         }
