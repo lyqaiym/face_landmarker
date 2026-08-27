@@ -83,6 +83,10 @@ clone() { # <dest-relative-path> <url> <ref>
     git -C "$dest" checkout --quiet "$ref"
   else
     git clone --depth 1 --branch "$ref" "$url" "$dest"
+    # --branch 对 tag 会留下 detached HEAD((no branch));补个本地分支,和 branch 的行为对齐
+    if ! git -C "$dest" symbolic-ref -q HEAD >/dev/null 2>&1; then
+      git -C "$dest" checkout -q -b "$ref"
+    fi
   fi
 }
 
@@ -101,20 +105,24 @@ done
 # 但没有这个标记,而 patch --forward 在 hunk 已应用时退出码是 1。
 apply() { # <dest-relative-path> <patch-file...>
   local dest="$ROOT/$1"; shift
+  echo "apply dest=$dest"
   local p
   for p in "$@"; do
-    if ( cd "$dest" && patch -p1 --reverse --dry-run < "$PATCHES/$p" >/dev/null 2>&1 ); then
+    echo "apply p=$p"
+    # -f 关掉交互提问:否则 reverse --dry-run 在"未打过"时会问 "Ignore -R? [y]",
+    # 从 EOF 读不到答案,Apple patch 默认 y 转成 forward 干跑,返回 0 误判成"已打过"。
+    if ( cd "$dest" && patch -f -p1 --reverse --dry-run < "$PATCHES/$p" >/dev/null 2>&1 ); then
       echo "skip   $1 <- $(basename "$p") (已打过)"
     else
       echo "patch  $1 <- $(basename "$p")"
-      ( cd "$dest" && patch -p1 --forward < "$PATCHES/$p" )
+      ( cd "$dest" && patch -f -p1 --forward < "$PATCHES/$p" )
     fi
   done
 }
 
 apply "audio_tools/src/main/cpp/audio_tools" audio_tools_fixes.diff
 apply "icu/src/main/cpp/icu" icu_udata.patch
-apply "sentencepiece/src/main/cpp/sentencepiece" sentencepiece.diff
+apply "sentencepiece/src/main/cpp/sentencepiece/sentencepiece" sentencepiece.diff
 apply "stblib/src/main/cpp/stblib" stb_image_impl.diff
 # LiteRT 的 mediapipe GPU 自定义算子:v2.1.6 原生没有这四个 mediapipe 目录
 # (common/tasks/selectors/gl 的 mediapipe),全由 Bazel 的 litert_custom_ops.diff 提供;
