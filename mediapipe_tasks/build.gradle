@@ -64,11 +64,20 @@ android {
 //    }
     sourceSets {
         main {
-            // No jniLibs.srcDirs: libs/ still holds the prebuilts this module used before
-            // it built its own .so, and AGP already packages libopencv_java4.so out of the
-            // CMake output dir via the IMPORTED target that reads it from there.
-            java.srcDirs += ['src/main/mediapipe']
-//            java.srcDirs += ['src/main/protobuf']
+            // Java sources come straight from the mediapipesource Bazel checkout
+            // (framework + tasks); generated protos land in src/main/generated/proto.
+            java.srcDirs += [
+                '../mediapipesource/mediapipe/java',
+                '../mediapipesource/mediapipe/tasks/java',
+                'src/main/generated'
+            ]
+            // Legacy MediaPipe "Solutions" API + the full-runtime TypeNameRegistry are not
+            // part of the Tasks stack the app uses.
+            java.exclude 'com/google/mediapipe/solutions/**'
+            java.exclude 'com/google/mediapipe/glutil/**'
+            java.exclude 'com/google/mediapipe/solutioncore/**'
+            java.exclude 'com/google/mediapipe/components/**'
+            java.exclude 'com/google/mediapipe/framework/TypeNameRegistryFull.java'
         }
     }
     externalNativeBuild {
@@ -125,8 +134,9 @@ dependencies {
     implementation 'com.google.flogger:flogger:latest.release'
     implementation 'com.google.flogger:flogger-system-backend:latest.release'
     implementation 'com.google.auto.value:auto-value-annotations:1.8.1'
+    annotationProcessor 'com.google.auto.value:auto-value:1.8.1'
     implementation 'com.google.guava:guava:27.0.1-android'
-    implementation 'com.google.protobuf:protobuf-java:3.11.4'
+    implementation 'com.google.protobuf:protobuf-javalite:4.31.1'
 //    implementation project(':tasks_vision')
 //    implementation project(':framework')
 //    implementation project(':xnnpack')
