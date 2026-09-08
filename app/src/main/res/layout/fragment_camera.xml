@@ -22,13 +22,15 @@
 
     <androidx.camera.view.PreviewView
         android:id="@+id/view_finder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="320dp"
+        android:layout_height="240dp"
+        android:layout_gravity="top|center_horizontal" />
 
     <com.google.mediapipe.examples.facelandmarker.OverlayView
         android:id="@+id/overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="320dp"
+        android:layout_height="240dp"
+        android:layout_gravity="top|center_horizontal" />
 
     <include
         android:id="@+id/bottom_sheet_layout"
