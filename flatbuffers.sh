@@ -40,7 +40,7 @@ MODULES="
   tensorflow/src/main/cpp/tensorflow|https://github.com/tensorflow/tensorflow.git|a481b10260dfdf833a1b16007eead49c1d7febf3
   tensorflow_text/src/main/cpp/tensorflow_text|git@github.com:tensorflow/text.git|v2.20.0
   mediapipe_tasks/src/main/cpp/third_party/OpenCL-Headers|git@github.com:KhronosGroup/OpenCL-Headers.git|dcd5bede6859d26833cd85f0d6bbcee7382dc9b3
-  mediapipesource|git@github.com:google-ai-edge/mediapipe.git|master
+  mediapipesource|git@github.com:google-ai-edge/mediapipe.git|c17b2a83e8944d2811889a2a08d629c20bcb6ed8
 "
 
 # LiteRT 层的依赖,目标目录是 LiteRT/src/main/cpp/<dep>。flatbuffers/protobuf 之外
@@ -83,7 +83,7 @@ clone() { # <dest-relative-path> <url> <ref>
     git clone "$url" "$dest"
     git -C "$dest" checkout --quiet "$ref"
   else
-    git clone --depth 1 --branch "$ref" "$url" "$dest"
+    git clone --depth 10 --branch "$ref" "$url" "$dest"
     # --branch 对 tag 会留下 detached HEAD((no branch));补个本地分支,和 branch 的行为对齐
     if ! git -C "$dest" symbolic-ref -q HEAD >/dev/null 2>&1; then
       git -C "$dest" checkout -q -b "$ref"
